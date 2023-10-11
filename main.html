@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Timer</title>
+</head>
+<body>
+    <label for="minMinutesInput">Minimum Minutes:</label>
+    <input type="number" id="minMinutesInput" value="1"> <!-- Default to 1 minute -->
+    <label for="minSecondsInput">Minimum Seconds:</label>
+    <input type="number" id="minSecondsInput" value="0"> <!-- Default to 0 seconds -->
+
+    <br>
+
+    <label for="maxMinutesInput">Maximum Minutes:</label>
+    <input type="number" id="maxMinutesInput" value="2"> <!-- Default to 2 minutes -->
+    <label for="maxSecondsInput">Maximum Seconds:</label>
+    <input type="number" id="maxSecondsInput" value="0"> <!-- Default to 0 seconds -->
+
+    <br>
+
+    <button id="startButton">Start Timer</button>
+    <p id="timerOutput"></p>
+
+    <script>
+        document.getElementById("startButton").addEventListener("click", function () {
+            // Get user input for minimum and maximum times in minutes and seconds
+            const minMinutes = parseInt(document.getElementById("minMinutesInput").value);
+            const minSeconds = parseInt(document.getElementById("minSecondsInput").value);
+            const maxMinutes = parseInt(document.getElementById("maxMinutesInput").value);
+            const maxSeconds = parseInt(document.getElementById("maxSecondsInput").value);
+
+            // Convert minutes and seconds to total seconds
+            const minTime = minMinutes * 60 + minSeconds;
+            const maxTime = maxMinutes * 60 + maxSeconds;
+
+            // Check if the inputs are valid
+            if (minTime >= maxTime) {
+                alert("Minimum time must be less than maximum time.");
+                return;
+            }
+
+            // Generate a random time interval in seconds
+            const randomTime = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
+            const randomTimeMinutes = Math.floor(randomTime / 60);
+            const randomTimeSeconds = randomTime % 60;
+            let timeRemaining = randomTime;
+
+            document.getElementById("timerOutput").textContent = `Random time selected: ${randomTimeMinutes} minutes ${randomTimeSeconds} seconds`;
+            
+            // Start the countdown timer
+            const timerDisplay = document.getElementById("timerOutput");
+            timerDisplay.textContent = `Time remaining: ${timeRemaining} seconds`;
+
+            const countdownInterval = setInterval(function () {
+                timeRemaining--;
+                if (timeRemaining <= 0) {
+                    clearInterval(countdownInterval);
+                    timerDisplay.textContent = "Timer complete!";
+                } else {
+                    const minutesRemaining = Math.floor(timeRemaining / 60);
+                    const secondsRemaining = timeRemaining % 60;
+                    timerDisplay.textContent = `Time remaining: ${minutesRemaining} minutes ${secondsRemaining} seconds`;
+                }
+            }, 1000); // Update the countdown every 1 second
+        });
+    </script>
+</body>
+</html>
