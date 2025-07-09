@@ -1,33 +1,237 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Timer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 480px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a1a1a;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+            letter-spacing: -0.025em;
+        }
+
+        .time-section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .input-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        input[type="number"] {
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .start-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 32px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .start-button:active {
+            transform: translateY(0);
+        }
+
+        .start-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .timer-display {
+            text-align: center;
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 24px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .timer-text {
+            font-size: 1.25rem;
+            color: #1e293b;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .timer-countdown {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 16px 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-complete {
+            color: #059669;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+            margin: 24px 0;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .timer-countdown {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <label for="minMinutesInput">Minimum Minutes:</label>
-    <input type="number" id="minMinutesInput" value="1"> <!-- Default to 1 minute -->
-    <label for="minSecondsInput">Minimum Seconds:</label>
-    <input type="number" id="minSecondsInput" value="0"> <!-- Default to 0 seconds -->
+    <div class="container">
+        <h1>Random Timer</h1>
+        
+        <div class="time-section">
+            <div class="section-title">
+                <span>⏱️</span>
+                Minimum Time
+            </div>
+            <div class="time-inputs">
+                <div class="input-group">
+                    <label class="input-label" for="minMinutesInput">Minutes</label>
+                    <input type="number" id="minMinutesInput" value="1" min="0" max="59">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="minSecondsInput">Seconds</label>
+                    <input type="number" id="minSecondsInput" value="0" min="0" max="59">
+                </div>
+            </div>
+        </div>
 
-    <br>
+        <div class="divider"></div>
 
-    <label for="maxMinutesInput">Maximum Minutes:</label>
-    <input type="number" id="maxMinutesInput" value="2"> <!-- Default to 2 minutes -->
-    <label for="maxSecondsInput">Maximum Seconds:</label>
-    <input type="number" id="maxSecondsInput" value="0"> <!-- Default to 0 seconds -->
+        <div class="time-section">
+            <div class="section-title">
+                <span>⏰</span>
+                Maximum Time
+            </div>
+            <div class="time-inputs">
+                <div class="input-group">
+                    <label class="input-label" for="maxMinutesInput">Minutes</label>
+                    <input type="number" id="maxMinutesInput" value="2" min="0" max="59">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="maxSecondsInput">Seconds</label>
+                    <input type="number" id="maxSecondsInput" value="0" min="0" max="59">
+                </div>
+            </div>
+        </div>
 
-    <br>
-
-    <button id="startButton">Start Timer</button>
-    <p id="timerOutput"></p>
+        <button id="startButton" class="start-button">Start Timer</button>
+        
+        <div id="timerOutput" class="timer-display" style="display: none;">
+            <div id="timerText" class="timer-text"></div>
+            <div id="timerCountdown" class="timer-countdown"></div>
+        </div>
+    </div>
 
     <script>
+        let currentTimer = null;
+
         document.getElementById("startButton").addEventListener("click", function () {
+            // Clear any existing timer
+            if (currentTimer) {
+                clearInterval(currentTimer);
+            }
+
             // Get user input for minimum and maximum times in minutes and seconds
-            const minMinutes = parseInt(document.getElementById("minMinutesInput").value);
-            const minSeconds = parseInt(document.getElementById("minSecondsInput").value);
-            const maxMinutes = parseInt(document.getElementById("maxMinutesInput").value);
-            const maxSeconds = parseInt(document.getElementById("maxSecondsInput").value);
+            const minMinutes = parseInt(document.getElementById("minMinutesInput").value) || 0;
+            const minSeconds = parseInt(document.getElementById("minSecondsInput").value) || 0;
+            const maxMinutes = parseInt(document.getElementById("maxMinutesInput").value) || 0;
+            const maxSeconds = parseInt(document.getElementById("maxSecondsInput").value) || 0;
 
             // Convert minutes and seconds to total seconds
             const minTime = minMinutes * 60 + minSeconds;
@@ -39,30 +243,61 @@
                 return;
             }
 
+            if (minTime <= 0) {
+                alert("Minimum time must be greater than 0.");
+                return;
+            }
+
             // Generate a random time interval in seconds
             const randomTime = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
             const randomTimeMinutes = Math.floor(randomTime / 60);
             const randomTimeSeconds = randomTime % 60;
             let timeRemaining = randomTime;
 
-            document.getElementById("timerOutput").textContent = `Random time selected: ${randomTimeMinutes} minutes ${randomTimeSeconds} seconds`;
+            // Show timer display
+            const timerOutput = document.getElementById("timerOutput");
+            const timerText = document.getElementById("timerText");
+            const timerCountdown = document.getElementById("timerCountdown");
             
-            // Start the countdown timer
-            const timerDisplay = document.getElementById("timerOutput");
-            timerDisplay.textContent = `Time remaining: ${timeRemaining} seconds`;
+            timerOutput.style.display = "block";
+            timerText.textContent = `Random time selected: ${randomTimeMinutes}:${randomTimeSeconds.toString().padStart(2, '0')}`;
+            timerText.className = "timer-text"; // Reset class
+            
+            // Disable start button during countdown
+            const startButton = document.getElementById("startButton");
+            startButton.disabled = true;
+            startButton.textContent = "Timer Running...";
 
-            const countdownInterval = setInterval(function () {
+            // Start the countdown timer
+            function updateDisplay() {
+                const minutesRemaining = Math.floor(timeRemaining / 60);
+                const secondsRemaining = timeRemaining % 60;
+                timerCountdown.textContent = `${minutesRemaining}:${secondsRemaining.toString().padStart(2, '0')}`;
+            }
+
+            // Show initial time
+            updateDisplay();
+
+            // Start countdown
+            currentTimer = setInterval(function () {
                 timeRemaining--;
-                if (timeRemaining <= 0) {
-                    clearInterval(countdownInterval);
-                    timerDisplay.textContent = "Timer complete!";
+                
+                if (timeRemaining < 0) {
+                    clearInterval(currentTimer);
+                    currentTimer = null;
+                    timerText.textContent = "Timer Complete!";
+                    timerText.className = "timer-text timer-complete";
+                    timerCountdown.textContent = "0:00";
+                    startButton.disabled = false;
+                    startButton.textContent = "Start Timer";
                 } else {
-                    const minutesRemaining = Math.floor(timeRemaining / 60);
-                    const secondsRemaining = timeRemaining % 60;
-                    timerDisplay.textContent = `Time remaining: ${minutesRemaining} minutes ${secondsRemaining} seconds`;
+                    updateDisplay();
                 }
-            }, 1000); // Update the countdown every 1 second
+            }, 1000);
         });
+
+        // Reset timer text class when starting new timer (remove duplicate listener)
+        // This functionality is already handled in the main click handler above
     </script>
 </body>
 </html>
