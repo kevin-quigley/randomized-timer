@@ -119,6 +119,49 @@
             transform: none;
         }
 
+        .timer-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .control-button {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .stop-button {
+            background: #ef4444;
+            color: white;
+        }
+
+        .stop-button:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        .reset-button {
+            background: #6b7280;
+            color: white;
+        }
+
+        .reset-button:hover {
+            background: #4b5563;
+            transform: translateY(-1px);
+        }
+
+        .control-button:active {
+            transform: translateY(0);
+        }
+
         .timer-display {
             text-align: center;
             background: #f8fafc;
@@ -212,6 +255,11 @@
 
         <button id="startButton" class="start-button">Start Timer</button>
         
+        <div id="timerControls" class="timer-controls" style="display: none;">
+            <button id="stopButton" class="control-button stop-button">Stop Timer</button>
+            <button id="resetButton" class="control-button reset-button">Reset</button>
+        </div>
+        
         <div id="timerOutput" class="timer-display" style="display: none;">
             <div id="timerText" class="timer-text"></div>
             <div id="timerCountdown" class="timer-countdown"></div>
@@ -254,12 +302,14 @@
             const randomTimeSeconds = randomTime % 60;
             let timeRemaining = randomTime;
 
-            // Show timer display
+            // Show timer display and controls
             const timerOutput = document.getElementById("timerOutput");
             const timerText = document.getElementById("timerText");
             const timerCountdown = document.getElementById("timerCountdown");
+            const timerControls = document.getElementById("timerControls");
             
             timerOutput.style.display = "block";
+            timerControls.style.display = "flex";
             timerText.textContent = `Random time selected: ${randomTimeMinutes}:${randomTimeSeconds.toString().padStart(2, '0')}`;
             timerText.className = "timer-text"; // Reset class
             
@@ -290,14 +340,48 @@
                     timerCountdown.textContent = "0:00";
                     startButton.disabled = false;
                     startButton.textContent = "Start Timer";
+                    timerControls.style.display = "none";
                 } else {
                     updateDisplay();
                 }
             }, 1000);
         });
 
-        // Reset timer text class when starting new timer (remove duplicate listener)
-        // This functionality is already handled in the main click handler above
+        // Stop timer functionality
+        document.getElementById("stopButton").addEventListener("click", function () {
+            if (currentTimer) {
+                clearInterval(currentTimer);
+                currentTimer = null;
+                
+                const timerText = document.getElementById("timerText");
+                const timerCountdown = document.getElementById("timerCountdown");
+                const startButton = document.getElementById("startButton");
+                const timerControls = document.getElementById("timerControls");
+                
+                timerText.textContent = "Timer Stopped";
+                timerText.className = "timer-text";
+                startButton.disabled = false;
+                startButton.textContent = "Start Timer";
+                timerControls.style.display = "none";
+            }
+        });
+
+        // Reset timer functionality
+        document.getElementById("resetButton").addEventListener("click", function () {
+            if (currentTimer) {
+                clearInterval(currentTimer);
+                currentTimer = null;
+            }
+            
+            const timerOutput = document.getElementById("timerOutput");
+            const timerControls = document.getElementById("timerControls");
+            const startButton = document.getElementById("startButton");
+            
+            timerOutput.style.display = "none";
+            timerControls.style.display = "none";
+            startButton.disabled = false;
+            startButton.textContent = "Start Timer";
+        });
     </script>
 </body>
 </html>
