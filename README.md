@@ -48,29 +48,6 @@ Visit the live application: **[https://kevin-quigley.github.io/randomized-timer/
 - **Color-coded controls**: Red stop button, gray reset button
 - **Accessibility**: Proper form labels and semantic HTML
 
-## 🔧 Local Development
-
-To run locally:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/kevin-quigley/randomized-timer.git
-   ```
-
-2. Navigate to the project directory:
-   ```bash
-   cd randomized-timer
-   ```
-
-3. Open `index.html` in your web browser or serve with a local server:
-   ```bash
-   # Using Python
-   python -m http.server 8000
-   
-   # Using Node.js
-   npx serve .
-   ```
-
 ## 📱 Browser Support
 
 - Chrome (latest)
